@@ -11,8 +11,6 @@ interface BankContextType {
   addLoan: (amountInCents: number) => void;
   updateCreditLimit: (newLimitInCents: number) => void;
   addBulkTransactions: (count: number, amountInCents: number, deduct: boolean) => void;
-  setThemeColor: (color: string) => void;
-  setContainerColor: (color: string) => void;
 }
 
 const BankContext = createContext<BankContextType | undefined>(undefined);
@@ -23,8 +21,6 @@ const defaultAccountState: BankAccount = {
   balance: 18200000,
   hideBalance: false,
   creditLimit: 4800000,
-  themeColor: '144 100% 45%',
-  containerColor: '0 0% 4%', // Preto + Verde Next
 };
 
 export const BankProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

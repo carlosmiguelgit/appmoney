@@ -1,4 +1,4 @@
-import { Home, Receipt, ArrowUpRight, Menu as MenuIcon } from 'lucide-react';
+import { Home, Receipt, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface BottomNavProps {
@@ -11,13 +11,12 @@ export const BottomNav = ({ currentScreen, onNavigate }: BottomNavProps) => {
     { id: 'dashboard', icon: Home, label: 'Início' },
     { id: 'pix', icon: ArrowUpRight, label: 'Enviar' },
     { id: 'statement', icon: Receipt, label: 'Extrato' },
-    { id: 'theme', icon: MenuIcon, label: 'Menu' },
   ];
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 pb-safe pointer-events-none">
       <div className="max-w-md mx-auto px-5 pb-4">
-        <div className="pointer-events-auto glass border border-white/10 rounded-full shadow-float px-2 py-2 grid grid-cols-4">
+        <div className="pointer-events-auto glass border border-white/10 rounded-full shadow-float px-2 py-2 grid grid-cols-3">
           {items.map((item) => {
             const active = currentScreen === item.id;
             return (

@@ -7,10 +7,9 @@ import { Investments } from '@/components/Investments';
 import { CreditCard } from '@/components/CreditCard';
 import { Loan } from '@/components/Loan';
 import { AdminPanel } from '@/components/AdminPanel';
-import { ThemeSettings } from '@/components/ThemeSettings';
 import { BottomNav } from '@/components/BottomNav';
 
-type Screen = 'dashboard' | 'pix' | 'statement' | 'investments' | 'creditCard' | 'loan' | 'admin' | 'theme';
+type Screen = 'dashboard' | 'pix' | 'statement' | 'investments' | 'creditCard' | 'loan' | 'admin';
 
 const Index = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('dashboard');
@@ -76,9 +75,6 @@ const Index = () => {
         )}
         {currentScreen === 'admin' && (
           <AdminPanel onBack={() => setCurrentScreen('dashboard')} />
-        )}
-        {currentScreen === 'theme' && (
-          <ThemeSettings onBack={() => setCurrentScreen('dashboard')} />
         )}
       </div>
       
