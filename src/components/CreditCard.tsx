@@ -63,7 +63,7 @@ export const CreditCard = ({ onBack }: CreditCardProps) => {
   return (
     <div className="bg-background">
       {/* Header */}
-      <div className="bg-gradient-primary p-6">
+      <div className="bg-gradient-primary px-5 pt-6 pb-6">
         <div className="max-w-md mx-auto">
           <button onClick={onBack} className="text-primary-foreground mb-4">
             <ArrowLeft size={24} />
@@ -72,7 +72,7 @@ export const CreditCard = ({ onBack }: CreditCardProps) => {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-md mx-auto px-5 py-8 space-y-6">
         
         {/* Seletor de Mês */}
         <div className="flex items-center gap-3">

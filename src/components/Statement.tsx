@@ -86,7 +86,7 @@ export const Statement = ({ onBack }: StatementProps) => {
   return (
     <div className="bg-background min-h-screen animate-fade-in">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-primary p-6 pb-8">
+      <div className="relative overflow-hidden bg-gradient-primary px-5 pt-6 pb-8">
         <div className="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl" />
         <div className="relative max-w-md mx-auto">
           <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center text-primary-foreground mb-4 active:scale-95 transition">

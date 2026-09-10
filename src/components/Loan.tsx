@@ -57,7 +57,7 @@ export const Loan = ({ onBack }: LoanProps) => {
         onComplete={handleLoanComplete}
       />
       <div className="bg-background">
-        <div className="bg-gradient-primary p-6">
+        <div className="bg-gradient-primary px-5 pt-6 pb-6">
           <div className="max-w-md mx-auto">
             <button onClick={onBack} className="text-primary-foreground mb-4">
               <ArrowLeft size={24} />
@@ -66,7 +66,7 @@ export const Loan = ({ onBack }: LoanProps) => {
           </div>
         </div>
 
-        <div className="max-w-md mx-auto px-6 py-8 space-y-6">
+        <div className="max-w-md mx-auto px-5 py-8 space-y-6">
           
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">

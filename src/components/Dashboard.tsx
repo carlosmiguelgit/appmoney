@@ -20,7 +20,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
   return (
     <div className="bg-background min-h-screen animate-fade-in">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-primary p-6 pb-32">
+      <div className="relative overflow-hidden bg-gradient-primary px-5 pt-6 pb-32">
         <div className="pointer-events-none absolute -top-20 -right-20 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute top-10 -left-24 w-72 h-72 rounded-full bg-black/20 blur-3xl" />
         <div className="relative max-w-md mx-auto">

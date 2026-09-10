@@ -35,7 +35,7 @@ export const Investments = ({ onBack }: InvestmentsProps) => {
   return (
     <div className="bg-background">
       {/* Header */}
-      <div className="bg-gradient-primary p-6">
+      <div className="bg-gradient-primary px-5 pt-6 pb-6">
         <div className="max-w-md mx-auto">
           <button onClick={onBack} className="text-primary-foreground mb-4">
             <ArrowLeft size={24} />
@@ -44,7 +44,7 @@ export const Investments = ({ onBack }: InvestmentsProps) => {
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-6 py-8">
+      <div className="max-w-md mx-auto px-5 py-8">
         {/* Current Balance */}
         <Card className="p-6 mb-6">
           <h2 className="text-lg font-semibold mb-2">Saldo Disponível para Investir</h2>
