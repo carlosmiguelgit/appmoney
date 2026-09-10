@@ -31,7 +31,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
                 alt="RapidPag"
                 className="h-14 w-auto rounded-2xl bg-black border border-white/10 shadow-float group-active:scale-95 transition-transform"
               />
-              <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest">PESSOA<br />JURÍDICA</div>
+              <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest">Seu Banco<br />Digital</div>
             </button>
             <div className="flex items-center gap-2">
               <span className="text-primary-foreground/80 text-sm">Olá,</span>
@@ -42,6 +42,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
           </div>
           
           <h1 className="text-primary-foreground text-[26px] leading-tight font-bold tracking-tight">Tech Solutions LTDA</h1>
+          <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest mt-1">CONTA JURIDICA</div>
         </div>
       </div>
 
