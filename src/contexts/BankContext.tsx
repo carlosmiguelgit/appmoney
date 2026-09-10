@@ -32,15 +32,10 @@ export const BankProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const data = JSON.parse(stored);
-      const loadedAccount = { ...defaultAccountState, ...data.account };
+      // Ignora cores customizadas legadas (tema agora é fixo preto + verde)
+      const { themeColor, containerColor, ...savedAccount } = data.account ?? {};
+      const loadedAccount = { ...defaultAccountState, ...savedAccount };
       setAccount(loadedAccount);
-      
-      if (loadedAccount.themeColor) {
-        document.documentElement.style.setProperty('--primary', loadedAccount.themeColor);
-      }
-      if (loadedAccount.containerColor) {
-        updateContainerCSS(loadedAccount.containerColor);
-      }
 
       setTransactions(data.transactions.map((t: any) => ({
         ...t,
@@ -53,26 +48,6 @@ export const BankProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ account, transactions, loans }));
   }, [account, transactions, loans]);
-
-  const updateContainerCSS = (hsl: string) => {
-    const [h, s, lStr] = hsl.split(' ');
-    const l = parseInt(lStr);
-    
-    document.documentElement.style.setProperty('--background', hsl);
-    document.documentElement.style.setProperty('--card', `${h} ${s} ${l + 4}%`);
-    document.documentElement.style.setProperty('--secondary', `${h} ${s} ${l + 10}%`);
-    document.documentElement.style.setProperty('--primary-glow', `${h} ${s} ${Math.max(0, l - 5)}%`);
-  };
-
-  const setThemeColor = (color: string) => {
-    setAccount(prev => ({ ...prev, themeColor: color }));
-    document.documentElement.style.setProperty('--primary', color);
-  };
-
-  const setContainerColor = (color: string) => {
-    setAccount(prev => ({ ...prev, containerColor: color }));
-    updateContainerCSS(color);
-  };
 
   const toggleBalanceVisibility = () => setAccount(prev => ({ ...prev, hideBalance: !prev.hideBalance }));
   const addTransaction = (t: any) => {
@@ -90,7 +65,7 @@ export const BankProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   return (
     <BankContext.Provider value={{
-      account, transactions, loans, toggleBalanceVisibility, addTransaction, addLoan, updateCreditLimit, addBulkTransactions, setThemeColor, setContainerColor
+      account, transactions, loans, toggleBalanceVisibility, addTransaction, addLoan, updateCreditLimit, addBulkTransactions
     }}>
       {children}
     </BankContext.Provider>
