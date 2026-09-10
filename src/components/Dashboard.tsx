@@ -46,7 +46,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
 
       {/* Balance Card */}
       <div className="max-w-md mx-auto px-5 -mt-24 relative">
-        <Card className="p-6 shadow-float border-white/5 bg-card/95 backdrop-blur rounded-3xl animate-slide-up">
+        <Card className="p-6 shadow-float border-black bg-card/95 backdrop-blur rounded-3xl animate-slide-up">
           <div className="flex items-center justify-between mb-3">
             <span className="text-muted-foreground text-[13px] font-medium uppercase tracking-wider">Conta PJ</span>
             <button 
@@ -77,7 +77,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
               <button
                 key={a.label}
                 onClick={a.onClick}
-                className="flex-1 min-w-[96px] flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-secondary/70 hover:bg-secondary border border-white/5 active:scale-[0.97] transition group"
+                className="flex-1 min-w-[96px] flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-secondary/70 hover:bg-secondary border border-black active:scale-[0.97] transition group"
               >
                 <div className="w-11 h-11 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
                   <a.icon className="text-primary-foreground" size={19} />
@@ -90,7 +90,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
 
         {/* Info Cards */}
         <div className="mt-5 space-y-3 pb-28">
-          <Card className="p-5 rounded-3xl shadow-card border-white/5 hover:border-primary/30 hover:shadow-glow transition-all cursor-pointer group" >
+          <Card className="p-5 rounded-3xl shadow-card border-black hover:border-primary/30 hover:shadow-glow transition-all cursor-pointer group" >
             <div className="flex items-center gap-4" onClick={onCreditCardClick}>
               <div className="w-12 h-12 rounded-2xl bg-primary/12 flex items-center justify-center shrink-0">
                 <CreditCardIcon className="text-primary" size={24} />
@@ -103,7 +103,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
             </div>
           </Card>
 
-          <Card className="p-5 rounded-3xl shadow-card border-white/5 hover:border-primary/30 hover:shadow-glow transition-all cursor-pointer group">
+          <Card className="p-5 rounded-3xl shadow-card border-black hover:border-primary/30 hover:shadow-glow transition-all cursor-pointer group">
             <div className="flex items-center gap-4" onClick={onLoanClick}>
               <div className="w-12 h-12 rounded-2xl bg-success/12 flex items-center justify-center shrink-0">
                 <DollarSign className="text-success" size={24} />
@@ -125,7 +125,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
                 { icon: TrendingUp, text: 'Bolsa atinge novo recorde' },
                 { icon: Zap, text: 'FIIs em alta no mês' },
               ].map((n, i) => (
-                <Card key={i} className="p-3.5 rounded-2xl border-white/5 hover:shadow-card hover:-translate-y-0.5 transition-all">
+                <Card key={i} className="p-3.5 rounded-2xl border-black hover:shadow-card hover:-translate-y-0.5 transition-all">
                   <n.icon className="text-primary mb-2" size={18} />
                   <p className="text-[11.5px] font-medium leading-snug line-clamp-3">{n.text}</p>
                 </Card>

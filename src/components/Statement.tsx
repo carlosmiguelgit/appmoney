@@ -105,7 +105,7 @@ export const Statement = ({ onBack }: StatementProps) => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por nome ou valor"
-            className="pl-11 h-12 rounded-2xl bg-card border-white/5"
+            className="pl-11 h-12 rounded-2xl bg-card border-black"
           />
         </div>
 
@@ -127,7 +127,7 @@ export const Statement = ({ onBack }: StatementProps) => {
         </div>
 
         {filteredTransactions.length === 0 ? (
-          <Card className="p-10 text-center rounded-3xl border-white/5 animate-slide-up">
+          <Card className="p-10 text-center rounded-3xl border-black animate-slide-up">
             <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mx-auto mb-4">
               <ReceiptText size={24} className="text-muted-foreground" />
             </div>
@@ -143,7 +143,7 @@ export const Statement = ({ onBack }: StatementProps) => {
                   {items.map((transaction) => (
               <Card 
                 key={transaction.id} 
-                className="p-4 rounded-2xl border-white/5 hover:shadow-card hover:border-primary/25 active:scale-[0.99] transition-all cursor-pointer"
+                className="p-4 rounded-2xl border-black hover:shadow-card hover:border-primary/25 active:scale-[0.99] transition-all cursor-pointer"
                 onClick={() => setSelectedTransaction(transaction)}
               >
                 <div className="flex items-start gap-3.5">

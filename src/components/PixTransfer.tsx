@@ -207,7 +207,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
 
       <div className="max-w-md mx-auto px-5 py-6 pb-28">
         {step === 'amount' && (
-          <Card className="p-6 rounded-3xl shadow-card border-white/5 animate-slide-up">
+          <Card className="p-6 rounded-3xl shadow-card border-black animate-slide-up">
             <h2 className="text-lg font-semibold mb-4">Qual é o valor da transferência?</h2>
             <div className="mb-6">
               <div className="flex items-center gap-2">
@@ -239,7 +239,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
         )}
 
         {step === 'key' && (
-          <Card className="p-6 rounded-3xl shadow-card border-white/5 animate-slide-up">
+          <Card className="p-6 rounded-3xl shadow-card border-black animate-slide-up">
             <h2 className="text-lg font-semibold mb-4">Digite a chave Pix</h2>
 
             <div className="flex flex-wrap gap-2 mb-4">
