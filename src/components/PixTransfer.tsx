@@ -81,8 +81,10 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
   const [amount, setAmount] = useState('');
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [manualType, setManualType] = useState<PixKeyType | 'auto'>('auto');
 
-  const pixKeyType = useMemo(() => determinePixKeyType(rawPixKey), [rawPixKey]);
+  const autoType = useMemo(() => determinePixKeyType(rawPixKey), [rawPixKey]);
+  const pixKeyType: PixKeyType = manualType === 'auto' ? autoType : manualType;
   const formattedPixKey = useMemo(() => formatPixKeyInput(rawPixKey, pixKeyType), [rawPixKey, pixKeyType]);
 
   const isKeyValid = useMemo(() => {
@@ -110,7 +112,19 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
   };
 
   const getPlaceholder = () => {
+    if (pixKeyType === 'cpf') return 'Ex: 123.456.789-00';
+    if (pixKeyType === 'phone') return 'Ex: (11) 99999-9999';
+    if (pixKeyType === 'email') return 'Ex: nome@email.com';
+    if (pixKeyType === 'random') return 'Ex: chave aleatória';
     return 'CPF, Telefone, E-mail ou Chave Aleatória';
+  };
+
+  const keyTypeLabel = (t: PixKeyType | 'auto') => {
+    if (t === 'auto') return 'Auto';
+    if (t === 'cpf') return 'CPF';
+    if (t === 'phone') return 'Telefone';
+    if (t === 'email') return 'E-mail';
+    return 'Aleatória';
   };
 
   const handlePasswordConfirm = () => {
@@ -210,10 +224,29 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
         {step === 'key' && (
           <Card className="p-6 animate-fade-in">
             <h2 className="text-lg font-semibold mb-4">Digite a chave Pix</h2>
+
+            <div className="flex flex-wrap gap-2 mb-4">
+              {(['auto', 'cpf', 'phone', 'email', 'random'] as const).map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setManualType(t)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                    manualType === t
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-secondary text-muted-foreground border-transparent hover:border-primary'
+                  }`}
+                >
+                  {keyTypeLabel(t)}
+                </button>
+              ))}
+            </div>
             
             {pixKeyType !== 'unknown' && (
               <div className="mb-4 text-sm text-primary font-medium">
-                Tipo detectado: {pixKeyType === 'cpf' ? 'CPF' : pixKeyType === 'phone' ? 'Telefone' : pixKeyType === 'email' ? 'E-mail' : 'Aleatória'}
+                {manualType === 'auto'
+                  ? `Tipo detectado: ${pixKeyType === 'cpf' ? 'CPF' : pixKeyType === 'phone' ? 'Telefone' : pixKeyType === 'email' ? 'E-mail' : 'Aleatória'}`
+                  : `Tipo selecionado: ${pixKeyType === 'cpf' ? 'CPF' : pixKeyType === 'phone' ? 'Telefone' : pixKeyType === 'email' ? 'E-mail' : 'Aleatória'}`}
               </div>
             )}
 
