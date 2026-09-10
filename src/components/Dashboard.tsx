@@ -33,12 +33,14 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
               />
               <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest">PESSOA<br />JURÍDICA</div>
             </button>
-            <div className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center text-primary-foreground font-bold">
-              T
+            <div className="flex items-center gap-2">
+              <span className="text-primary-foreground/80 text-sm">Olá,</span>
+              <div className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center text-primary-foreground font-bold">
+                T
+              </div>
             </div>
           </div>
           
-          <div className="text-primary-foreground/80 text-sm">Olá,</div>
           <h1 className="text-primary-foreground text-[26px] leading-tight font-bold tracking-tight">Tech Solutions LTDA</h1>
         </div>
       </div>
