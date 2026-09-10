@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useBank } from '@/contexts/BankContext';
-import { generateRandomName, generateRandomBank, formatCurrency, formatPixKey } from '@/utils/pixUtils';
+import { generateRandomName, generateRandomBank, formatCurrency } from '@/utils/pixUtils';
 import { TransactionConfirmation } from './TransactionConfirmation';
 import { PasswordDialog } from './PasswordDialog';
 import { PixKeyType } from '@/types/transaction';
@@ -53,6 +53,32 @@ const determinePixKeyType = (rawKey: string): PixKeyType => {
   return 'unknown';
 };
 
+// Máscara progressiva: só insere . - ( ) quando há dígito após eles
+const formatCpfLive = (raw: string) => {
+  const d = raw.replace(/\D/g, '').slice(0, 11);
+  const a = d.slice(0, 3), b = d.slice(3, 6), c = d.slice(6, 9), e = d.slice(9, 11);
+  let out = a;
+  if (b) out += '.' + b;
+  if (c) out += '.' + c;
+  if (e) out += '-' + e;
+  return out;
+};
+
+const formatPhoneLive = (raw: string) => {
+  const d = raw.replace(/\D/g, '').slice(0, 11);
+  if (d.length <= 2) return d;
+  const ddd = d.slice(0, 2), rest = d.slice(2);
+  const splitAt = d.length > 10 ? 5 : 4;
+  const p1 = rest.slice(0, splitAt), p2 = rest.slice(splitAt);
+  return `(${ddd}) ${p1}${p2 ? '-' + p2 : ''}`;
+};
+
+const formatPixKeyLive = (raw: string, type: PixKeyType) => {
+  if (type === 'cpf') return formatCpfLive(raw);
+  if (type === 'phone') return formatPhoneLive(raw);
+  return raw;
+};
+
 // ---------- Componente principal ----------
 export const PixTransfer = ({ onBack }: PixTransferProps) => {
   const { account, addTransaction } = useBank();
@@ -68,15 +94,15 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
   const autoType = useMemo(() => determinePixKeyType(rawPixKey), [rawPixKey]);
   const pixKeyType: PixKeyType = manualType === 'auto' ? autoType : manualType;
   // Sem máscara ao digitar; formata só para exibição (000.000.000-00 / (51) 99999-9999)
-  const displayPixKey = formatPixKey(rawPixKey, pixKeyType);
+  const displayPixKey = useMemo(() => formatPixKeyLive(rawPixKey, pixKeyType), [rawPixKey, pixKeyType]);
 
   const isKeyValid = useMemo(() => {
-    if (pixKeyType === 'cpf') return isValidCPF(rawPixKey);
-    if (pixKeyType === 'phone') return isValidPhone(rawPixKey);
-    if (pixKeyType === 'email') return isValidEmailBasic(rawPixKey);
-    if (pixKeyType === 'random') return isValidRandomKey(rawPixKey);
+    if (pixKeyType === 'cpf') return isValidCPF(displayPixKey);
+    if (pixKeyType === 'phone') return isValidPhone(displayPixKey);
+    if (pixKeyType === 'email') return isValidEmailBasic(displayPixKey);
+    if (pixKeyType === 'random') return isValidRandomKey(displayPixKey);
     return false;
-  }, [rawPixKey, pixKeyType]);
+  }, [displayPixKey, pixKeyType]);
 
   const handleAmountSubmit = () => {
     const amountInCents = Math.round(parseFloat(amount) * 100);
@@ -253,7 +279,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
             <Input
               type="text"
               placeholder={getPlaceholder()}
-              value={rawPixKey}
+              value={displayPixKey}
               onChange={(e) => setRawPixKey(e.target.value)}
               className="mb-4"
               autoFocus
