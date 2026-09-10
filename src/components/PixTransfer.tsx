@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useBank } from '@/contexts/BankContext';
-import { generateRandomName, generateRandomBank, formatCurrency } from '@/utils/pixUtils';
+import { generateRandomName, generateRandomBank, formatCurrency, formatPixKey } from '@/utils/pixUtils';
 import { TransactionConfirmation } from './TransactionConfirmation';
 import { PasswordDialog } from './PasswordDialog';
 import { PixKeyType } from '@/types/transaction';
@@ -67,6 +67,8 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
 
   const autoType = useMemo(() => determinePixKeyType(rawPixKey), [rawPixKey]);
   const pixKeyType: PixKeyType = manualType === 'auto' ? autoType : manualType;
+  // Sem máscara ao digitar; formata só para exibição (000.000.000-00 / (51) 99999-9999)
+  const displayPixKey = formatPixKey(rawPixKey, pixKeyType);
 
   const isKeyValid = useMemo(() => {
     if (pixKeyType === 'cpf') return isValidCPF(rawPixKey);
@@ -118,7 +120,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
       type: 'pix-sent',
       amount: Math.round(parseFloat(amount) * 100),
       recipientName,
-      recipientKey: rawPixKey,
+      recipientKey: displayPixKey,
       recipientKeyType: pixKeyType,
       recipientBank,
       description: `Transferência Pix para ${recipientName}`,
@@ -140,7 +142,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
       <TransactionConfirmation
         recipientName={recipientName}
         recipientBank={recipientBank}
-        pixKey={rawPixKey}
+        pixKey={displayPixKey}
         pixKeyType={pixKeyType}
         amount={Math.round(parseFloat(amount) * 100)}
         onClose={handleConfirmationClose}
