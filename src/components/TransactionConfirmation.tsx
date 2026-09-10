@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { formatCurrency } from '@/utils/pixUtils';
+import { formatCurrency, maskPixKey } from '@/utils/pixUtils';
 import { useBank } from '@/contexts/BankContext';
 import { Receipt } from './Receipt';
 
@@ -18,84 +18,6 @@ interface TransactionConfirmationProps {
 }
 
 type Stage = 'confirming' | 'processing' | 'success';
-
-// --- função de máscara: esconde 3 primeiros e 2 últimos, mantendo formatação
-const maskPixKey = (key: string, type: 'cpf' | 'phone' | 'email' | 'random' | string): string => {
-  if (!key) return key;
-
-  const maskByDigitsKeepingFormat = (formatted: string) => {
-    const chars = formatted.split('');
-    const isMaskable = (c: string) => /[0-9A-Za-z]/.test(c);
-    const maskableIndices: number[] = [];
-    for (let i = 0; i < chars.length; i++) {
-      if (isMaskable(chars[i])) maskableIndices.push(i);
-    }
-    const total = maskableIndices.length;
-    for (let i = 0; i < total; i++) {
-      const idx = maskableIndices[i];
-      if (i < 3 || i >= total - 2) {
-        chars[idx] = '*';
-      }
-    }
-    return chars.join('');
-  };
-
-  switch (type) {
-    case 'cpf': {
-      const digits = key.replace(/\D/g, '').slice(0, 11);
-      if (digits.length === 11) {
-        const formatted = digits.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4');
-        return maskByDigitsKeepingFormat(formatted);
-      }
-      // fallback: aplica máscara simples mantendo o que vier
-      return maskByDigitsKeepingFormat(key);
-    }
-
-    case 'phone': {
-      const digits = key.replace(/\D/g, '').slice(0, 11);
-      if (digits.length === 11) {
-        const formatted = digits.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
-        return maskByDigitsKeepingFormat(formatted);
-      } else if (digits.length === 10) {
-        const formatted = digits.replace(/^(\d{2})(\d{4})(\d{4})$/, '($1) $2-$3');
-        return maskByDigitsKeepingFormat(formatted);
-      }
-      return maskByDigitsKeepingFormat(key);
-    }
-
-    case 'email': {
-      const parts = key.split('@');
-      if (parts.length !== 2) return maskByDigitsKeepingFormat(key);
-      const [name, domain] = parts;
-      // mascara apenas o nome (3 primeiros e 2 últimos)
-      const maskedName = name
-        .split('')
-        .map((c, i) => (i < 3 || i >= name.length - 2 ? '*' : c))
-        .join('');
-      return `${maskedName}@${domain}`;
-    }
-
-    case 'random': {
-      // mantém hífens, conta apenas alfanuméricos para decidir quais esconder
-      const arr = key.split('');
-      const totalMaskable = arr.filter(ch => /[0-9A-Za-z]/.test(ch)).length;
-      if (totalMaskable <= 0) return key;
-      let seen = 0;
-      return arr
-        .map((ch) => {
-          if (!/[0-9A-Za-z]/.test(ch)) return ch; // mantém hífen/pontuação
-          const indexAmongMaskable = seen;
-          seen += 1;
-          if (indexAmongMaskable < 3 || indexAmongMaskable >= totalMaskable - 2) return '*';
-          return ch;
-        })
-        .join('');
-    }
-
-    default:
-      return maskByDigitsKeepingFormat(key);
-  }
-};
 
 export const TransactionConfirmation = ({
   recipientName,

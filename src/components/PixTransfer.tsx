@@ -121,8 +121,8 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
   };
 
   const getPlaceholder = () => {
-    if (pixKeyType === 'cpf') return 'Ex: 12345678900';
-    if (pixKeyType === 'phone') return 'Ex: 11999999999';
+    if (pixKeyType === 'cpf') return 'Ex: 123.456.789-00';
+    if (pixKeyType === 'phone') return 'Ex: (51) 99999-9999';
     if (pixKeyType === 'email') return 'Ex: nome@email.com';
     if (pixKeyType === 'random') return 'Ex: chave aleatória';
     return 'CPF, Telefone, E-mail ou Chave Aleatória';
