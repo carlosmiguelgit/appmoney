@@ -11,28 +11,31 @@ export const BottomNav = ({ currentScreen, onNavigate }: BottomNavProps) => {
     { id: 'dashboard', icon: Home, label: 'Início' },
     { id: 'pix', icon: ArrowUpRight, label: 'Enviar' },
     { id: 'statement', icon: Receipt, label: 'Extrato' },
-    { id: 'theme', icon: MenuIcon, label: 'Menu ☰' },
+    { id: 'theme', icon: MenuIcon, label: 'Menu' },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-t border-border/50 pb-safe">
-      <div className="max-w-md mx-auto grid grid-cols-4 h-16">
-        {items.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => onNavigate(item.id)}
-            className={cn(
-              "flex flex-col items-center justify-center gap-1 transition-colors",
-              currentScreen === item.id ? "text-primary" : "text-muted-foreground"
-            )}
-          >
-            <item.icon size={20} className={cn(
-              "transition-transform",
-              currentScreen === item.id && "scale-110"
-            )} />
-            <span className="text-[10px] font-medium">{item.label}</span>
-          </button>
-        ))}
+    <div className="fixed bottom-0 left-0 right-0 z-50 pb-safe pointer-events-none">
+      <div className="max-w-md mx-auto px-5 pb-4">
+        <div className="pointer-events-auto glass border border-white/10 rounded-full shadow-float px-2 py-2 grid grid-cols-4">
+          {items.map((item) => {
+            const active = currentScreen === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                className={cn(
+                  "relative flex flex-col items-center justify-center gap-1 py-2 rounded-full transition-all active:scale-95",
+                  active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {active && <span className="absolute inset-0 rounded-full bg-gradient-primary shadow-glow" />}
+                <item.icon size={19} className="relative transition-transform" />
+                <span className="relative text-[10px] font-semibold">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

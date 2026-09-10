@@ -177,20 +177,37 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
         onCancel={() => setShowPasswordDialog(false)}
       />
       {/* Header */}
-      <div className="bg-gradient-primary p-6">
-        <div className="max-w-md mx-auto">
-          <button onClick={onBack} className="text-primary-foreground mb-4">
-            <ArrowLeft size={24} />
+      <div className="relative overflow-hidden bg-gradient-primary p-6 pb-8">
+        <div className="pointer-events-none absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/10 blur-3xl" />
+        <div className="relative max-w-md mx-auto">
+          <button onClick={onBack} className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center text-primary-foreground mb-4 active:scale-95 transition">
+            <ArrowLeft size={20} />
           </button>
-          <h1 className="text-primary-foreground text-2xl font-bold">
-            {step === 'amount' ? 'Enviar' : 'Para quem você quer transferir?'}
+          <h1 className="text-primary-foreground text-[22px] font-bold tracking-tight">
+            {step === 'amount' ? 'Enviar Pix' : 'Para quem transferir?'}
           </h1>
+          <div className="flex items-center gap-2 mt-4">
+            {['Valor', 'Chave'].map((label, i) => {
+              const activeStep = step === 'amount' ? 0 : 1;
+              const done = i < activeStep || (step === 'key' && i === 0);
+              return (
+                <div key={label} className="flex items-center gap-2 flex-1 last:flex-none">
+                  <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold ${
+                    i === activeStep ? 'bg-white text-primary' : done ? 'bg-white/25 text-white' : 'bg-white/10 text-white/60'
+                  }`}>
+                    <span className="tabular">{i + 1}</span> {label}
+                  </div>
+                  {i === 0 && <div className="flex-1 h-px bg-white/25 rounded" />}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-md mx-auto px-6 py-8">
+      <div className="max-w-md mx-auto px-5 py-6 pb-28">
         {step === 'amount' && (
-          <Card className="p-6 animate-fade-in">
+          <Card className="p-6 rounded-3xl shadow-card border-white/5 animate-slide-up">
             <h2 className="text-lg font-semibold mb-4">Qual é o valor da transferência?</h2>
             <div className="mb-6">
               <div className="flex items-center gap-2">
@@ -222,7 +239,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
         )}
 
         {step === 'key' && (
-          <Card className="p-6 animate-fade-in">
+          <Card className="p-6 rounded-3xl shadow-card border-white/5 animate-slide-up">
             <h2 className="text-lg font-semibold mb-4">Digite a chave Pix</h2>
 
             <div className="flex flex-wrap gap-2 mb-4">
