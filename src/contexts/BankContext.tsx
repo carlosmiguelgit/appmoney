@@ -23,8 +23,8 @@ const defaultAccountState: BankAccount = {
   balance: 18200000,
   hideBalance: false,
   creditLimit: 4800000,
-  themeColor: '260 80% 55%',
-  containerColor: '270 60% 8%', // Roxo escuro original
+  themeColor: '144 100% 45%',
+  containerColor: '0 0% 4%', // Preto + Verde Next
 };
 
 export const BankProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

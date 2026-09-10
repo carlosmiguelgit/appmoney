@@ -10,17 +10,17 @@ interface ThemeSettingsProps {
 }
 
 const PRESET_PRIMARY = [
-  { name: 'Roxo', value: '260 80% 55%' },
+  { name: 'Verde Next', value: '144 100% 45%' },
+  { name: 'Verde Escuro', value: '152 80% 32%' },
   { name: 'Azul', value: '220 80% 55%' },
-  { name: 'Verde', value: '160 80% 45%' },
-  { name: 'Rosa', value: '330 80% 55%' },
+  { name: 'Roxo', value: '260 80% 55%' },
 ];
 
 const PRESET_CONTAINERS = [
-  { name: 'Roxo Deep', value: '270 60% 8%' },
+  { name: 'Preto', value: '0 0% 4%' },
   { name: 'Preto Puro', value: '0 0% 0%' },
+  { name: 'Cinza Escuro', value: '0 0% 8%' },
   { name: 'Azul Noite', value: '220 40% 10%' },
-  { name: 'Cinza Escuro', value: '240 10% 12%' },
 ];
 
 export const ThemeSettings = ({ onBack }: ThemeSettingsProps) => {
@@ -115,8 +115,8 @@ export const ThemeSettings = ({ onBack }: ThemeSettingsProps) => {
           variant="outline" 
           className="w-full" 
           onClick={() => {
-            setThemeColor('260 80% 55%');
-            setContainerColor('270 60% 8%');
+            setThemeColor('144 100% 45%');
+            setContainerColor('0 0% 4%');
           }}
         >
           Restaurar Tudo para o Padrão
