@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useBank } from '@/contexts/BankContext';
-import { generateRandomName, generateRandomBank, formatCurrency } from '@/utils/pixUtils';
+import { generateRandomName, generateRandomBank, formatCurrency, maskPixKey } from '@/utils/pixUtils';
 import { TransactionConfirmation } from './TransactionConfirmation';
 import { PasswordDialog } from './PasswordDialog';
 import { PixKeyType } from '@/types/transaction';
@@ -13,7 +13,7 @@ interface PixTransferProps {
   onBack: () => void;
 }
 
-type Step = 'amount' | 'key' | 'confirmation';
+type Step = 'amount' | 'key' | 'review';
 
 // ---------- Funções de Validação e Formatação ----------
 
@@ -117,7 +117,17 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
     const bank = generateRandomBank();
     setRecipientName(name);
     setRecipientBank(bank);
+    setStep('review');
+  };
+
+  const handleReviewConfirm = () => {
     setShowPasswordDialog(true);
+  };
+
+  const handleReviewCancel = () => {
+    setRecipientName('');
+    setRecipientBank('');
+    setStep('key');
   };
 
   const getPlaceholder = () => {
@@ -193,12 +203,12 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
             <ArrowLeft size={20} />
           </button>
           <h1 className="text-primary-foreground text-[22px] font-bold tracking-tight">
-            {step === 'amount' ? 'Enviar Pix' : 'Para quem transferir?'}
+            {step === 'amount' ? 'Enviar Pix' : step === 'key' ? 'Para quem transferir?' : 'Revisar transferência'}
           </h1>
           <div className="flex items-center gap-2 mt-4">
-            {['Valor', 'Chave'].map((label, i) => {
-              const activeStep = step === 'amount' ? 0 : 1;
-              const done = i < activeStep || (step === 'key' && i === 0);
+            {['Valor', 'Chave', 'Revisar'].map((label, i) => {
+              const activeStep = step === 'amount' ? 0 : step === 'key' ? 1 : 2;
+              const done = i < activeStep;
               return (
                 <div key={label} className="flex items-center gap-2 flex-1 last:flex-none">
                   <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-semibold ${
@@ -206,7 +216,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
                   }`}>
                     <span className="tabular">{i + 1}</span> {label}
                   </div>
-                  {i === 0 && <div className="flex-1 h-px bg-white/25 rounded" />}
+                  {i < 2 && <div className="flex-1 h-px bg-white/25 rounded" />}
                 </div>
               );
             })}
@@ -299,6 +309,52 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
                 className="flex-1 bg-primary text-primary-foreground"
               >
                 Continuar
+              </Button>
+            </div>
+          </Card>
+        )}
+
+        {step === 'review' && (
+          <Card className="p-6 rounded-3xl shadow-card border-black animate-slide-up">
+            <h2 className="text-lg font-semibold mb-1">Confira o destinatário</h2>
+            <p className="text-sm text-muted-foreground mb-5">Verifique os dados antes de confirmar</p>
+
+            <div className="flex items-center gap-4 p-4 rounded-2xl bg-secondary/70 border border-black mb-4">
+              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg shrink-0">
+                {recipientName.charAt(0).toUpperCase()}
+              </div>
+              <div className="min-w-0">
+                <p className="font-bold truncate">{recipientName}</p>
+                <p className="text-[13px] text-muted-foreground truncate">{recipientBank}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center justify-between py-2 border-b border-border">
+                <span className="text-sm text-muted-foreground">
+                  {pixKeyType === 'cpf' ? 'CPF' : pixKeyType === 'phone' ? 'Telefone' : pixKeyType === 'email' ? 'E-mail' : 'Chave aleatória'}
+                </span>
+                <span className="text-sm font-semibold tabular">{maskPixKey(displayPixKey, pixKeyType)}</span>
+              </div>
+              <div className="flex items-center justify-between py-2">
+                <span className="text-sm text-muted-foreground">Valor</span>
+                <span className="text-xl font-bold tabular">{formatCurrency(Math.round(parseFloat(amount) * 100))}</span>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <Button
+                onClick={handleReviewCancel}
+                variant="outline"
+                className="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleReviewConfirm}
+                className="flex-1 bg-primary text-primary-foreground"
+              >
+                Confirmar
               </Button>
             </div>
           </Card>
