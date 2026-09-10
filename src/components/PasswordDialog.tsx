@@ -54,9 +54,11 @@ export const PasswordDialog = ({ open, onConfirm, onCancel }: PasswordDialogProp
             inputMode="numeric"
             value={password}
             onChange={handlePasswordChange}
-            className="text-center text-2xl tracking-widest opacity-0 absolute"
+            className="text-center text-2xl tracking-widest opacity-0 absolute pointer-events-none"
             maxLength={4}
             autoFocus
+            aria-hidden
+            tabIndex={-1}
           />
 
           <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
