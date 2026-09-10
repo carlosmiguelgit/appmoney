@@ -29,7 +29,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
               <img
                 src="/logo.png"
                 alt="RapidPag"
-                className="h-14 w-auto rounded-2xl border border-white/10 shadow-float group-active:scale-95 transition-transform"
+                className="h-14 w-auto rounded-2xl bg-black border border-white/10 shadow-float group-active:scale-95 transition-transform"
               />
               <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest">PESSOA<br />JURÍDICA</div>
             </button>
