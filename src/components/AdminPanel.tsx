@@ -94,7 +94,7 @@ export const AdminPanel = ({ onBack }: AdminPanelProps) => {
             <Button
               onClick={handleGenerate}
               disabled={!count || parseInt(count, 10) <= 0 || !amount || parseFloat(amount) <= 0}
-              className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 !mt-6"
+              className="w-full bg-primary text-primary-foreground !mt-6"
             >
               Gerar Transferências
             </Button>

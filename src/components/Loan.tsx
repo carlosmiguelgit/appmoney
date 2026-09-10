@@ -146,7 +146,7 @@ export const Loan = ({ onBack }: LoanProps) => {
               </Card>
 
               <Button 
-                className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90 mt-6"
+                className="w-full bg-primary text-primary-foreground mt-6"
                 onClick={handleRequestLoan}
                 disabled={currentAmount <= 0}
               >

@@ -79,7 +79,7 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
                 onClick={a.onClick}
                 className="flex-1 min-w-[96px] flex flex-col items-center gap-2.5 p-4 rounded-2xl bg-secondary/70 hover:bg-secondary border border-black active:scale-[0.97] transition group"
               >
-                <div className="w-11 h-11 rounded-full bg-gradient-primary flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
+                <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform">
                   <a.icon className="text-primary-foreground" size={19} />
                 </div>
                 <span className="text-[13px] font-semibold">{a.label}</span>

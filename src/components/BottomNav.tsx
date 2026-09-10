@@ -28,7 +28,7 @@ export const BottomNav = ({ currentScreen, onNavigate }: BottomNavProps) => {
                   active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                {active && <span className="absolute inset-0 rounded-full bg-gradient-primary shadow-glow" />}
+                {active && <span className="absolute inset-0 rounded-full bg-primary shadow-glow" />}
                 <item.icon size={19} className="relative transition-transform" />
                 <span className="relative text-[10px] font-semibold">{item.label}</span>
               </button>

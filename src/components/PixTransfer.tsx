@@ -231,7 +231,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
             <Button
               onClick={handleAmountSubmit}
               disabled={!amount || Math.round(parseFloat(amount) * 100) <= 0 || Math.round(parseFloat(amount) * 100) > account.balance}
-              className="w-full bg-gradient-primary text-primary-foreground hover:opacity-90"
+              className="w-full bg-primary text-primary-foreground"
             >
               Continuar
             </Button>
@@ -287,7 +287,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
               <Button
                 onClick={handleKeySubmit}
                 disabled={!isKeyValid}
-                className="flex-1 bg-gradient-primary text-primary-foreground hover:opacity-90"
+                className="flex-1 bg-primary text-primary-foreground"
               >
                 Continuar
               </Button>
