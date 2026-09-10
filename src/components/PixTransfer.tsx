@@ -53,24 +53,6 @@ const determinePixKeyType = (rawKey: string): PixKeyType => {
   return 'unknown';
 };
 
-const formatPixKeyInput = (raw: string, type: PixKeyType) => {
-  if (type === 'cpf') {
-    const digits = raw.replace(/\D/g, '').slice(0, 11);
-    let formatted = digits;
-    if (digits.length > 9) formatted = digits.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2})$/, '$1.$2.$3-$4');
-    else if (digits.length > 6) formatted = digits.replace(/^(\d{3})(\d{3})(\d{0,3})$/, '$1.$2.$3');
-    else if (digits.length > 3) formatted = digits.replace(/^(\d{3})(\d{0,3})$/, '$1.$2');
-    return formatted;
-  }
-  if (type === 'phone') {
-    const digits = raw.replace(/\D/g, '').slice(0, 11);
-    if (digits.length <= 2) return `(${digits}`;
-    if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
-  }
-  return raw;
-};
-
 // ---------- Componente principal ----------
 export const PixTransfer = ({ onBack }: PixTransferProps) => {
   const { account, addTransaction } = useBank();
@@ -85,15 +67,14 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
 
   const autoType = useMemo(() => determinePixKeyType(rawPixKey), [rawPixKey]);
   const pixKeyType: PixKeyType = manualType === 'auto' ? autoType : manualType;
-  const formattedPixKey = useMemo(() => formatPixKeyInput(rawPixKey, pixKeyType), [rawPixKey, pixKeyType]);
 
   const isKeyValid = useMemo(() => {
-    if (pixKeyType === 'cpf') return isValidCPF(formattedPixKey);
-    if (pixKeyType === 'phone') return isValidPhone(formattedPixKey);
-    if (pixKeyType === 'email') return isValidEmailBasic(formattedPixKey);
-    if (pixKeyType === 'random') return isValidRandomKey(formattedPixKey);
+    if (pixKeyType === 'cpf') return isValidCPF(rawPixKey);
+    if (pixKeyType === 'phone') return isValidPhone(rawPixKey);
+    if (pixKeyType === 'email') return isValidEmailBasic(rawPixKey);
+    if (pixKeyType === 'random') return isValidRandomKey(rawPixKey);
     return false;
-  }, [formattedPixKey, pixKeyType]);
+  }, [rawPixKey, pixKeyType]);
 
   const handleAmountSubmit = () => {
     const amountInCents = Math.round(parseFloat(amount) * 100);
@@ -112,8 +93,8 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
   };
 
   const getPlaceholder = () => {
-    if (pixKeyType === 'cpf') return 'Ex: 123.456.789-00';
-    if (pixKeyType === 'phone') return 'Ex: (11) 99999-9999';
+    if (pixKeyType === 'cpf') return 'Ex: 12345678900';
+    if (pixKeyType === 'phone') return 'Ex: 11999999999';
     if (pixKeyType === 'email') return 'Ex: nome@email.com';
     if (pixKeyType === 'random') return 'Ex: chave aleatória';
     return 'CPF, Telefone, E-mail ou Chave Aleatória';
@@ -137,7 +118,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
       type: 'pix-sent',
       amount: Math.round(parseFloat(amount) * 100),
       recipientName,
-      recipientKey: formattedPixKey,
+      recipientKey: rawPixKey,
       recipientKeyType: pixKeyType,
       recipientBank,
       description: `Transferência Pix para ${recipientName}`,
@@ -159,7 +140,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
       <TransactionConfirmation
         recipientName={recipientName}
         recipientBank={recipientBank}
-        pixKey={formattedPixKey}
+        pixKey={rawPixKey}
         pixKeyType={pixKeyType}
         amount={Math.round(parseFloat(amount) * 100)}
         onClose={handleConfirmationClose}
@@ -270,7 +251,7 @@ export const PixTransfer = ({ onBack }: PixTransferProps) => {
             <Input
               type="text"
               placeholder={getPlaceholder()}
-              value={formattedPixKey}
+              value={rawPixKey}
               onChange={(e) => setRawPixKey(e.target.value)}
               className="mb-4"
               autoFocus

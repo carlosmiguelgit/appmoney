@@ -26,13 +26,12 @@ export const Dashboard = ({ onPixClick, onStatementClick, onInvestmentsClick, on
         <div className="relative max-w-md mx-auto">
           <div className="flex items-center justify-between mb-8">
             <button onClick={onLogoClick} className="flex items-center gap-3 text-left group">
-              <div className="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center border border-white/20 shadow-float group-active:scale-95 transition-transform">
-                <Zap className="text-primary-foreground" size={22} />
-              </div>
-              <div>
-                <div className="text-primary-foreground font-bold text-lg leading-none">RapidPag</div>
-                <div className="text-primary-foreground/70 text-[11px] tracking-widest mt-1">PESSOA JURÍDICA</div>
-              </div>
+              <img
+                src="/logo.png"
+                alt="RapidPag"
+                className="h-14 w-auto rounded-2xl border border-white/10 shadow-float group-active:scale-95 transition-transform"
+              />
+              <div className="text-primary-foreground/70 text-[11px] font-semibold tracking-widest">PESSOA<br />JURÍDICA</div>
             </button>
             <div className="w-10 h-10 rounded-full bg-white/15 border border-white/20 flex items-center justify-center text-primary-foreground font-bold">
               T
